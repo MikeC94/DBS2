@@ -1,3 +1,9 @@
+DELETE FROM MovieGenre;
+DELETE FROM MovieCharacter;
+DELETE FROM Person;
+DELETE FROM Genre;
+DELETE FROM Movie;
+
 DROP TABLE MovieGenre;
 DROP TABLE MovieCharacter;
 DROP TABLE Person;
