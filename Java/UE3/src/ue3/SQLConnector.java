@@ -5,14 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
@@ -21,34 +13,27 @@ import java.util.logging.Logger;
 public class SQLConnector {
 
     private String conString;
-    private String user;
-    private String password;
     private Connection con;
     private Statement stmt;
+    private boolean connect;
 
-    public SQLConnector(
-            String server,
-            String port,
-            String database,
-            String user,
-            String password) {
-        this.conString = "jdbc:oracle:thin:@" + server
-                + ":" + port + ":" + database;
-        this.user = user;
-        this.password = password;
-
+    public SQLConnector() {
+        this.conString = "jdbc:oracle:thin:@" + Properties.server
+                + ":" + Properties.port + ":" + Properties.database;
     }
 
     public boolean connect() {
         try {
             con = DriverManager.getConnection(
                     this.conString,
-                    this.user,
-                    this.password);
+                    Properties.username,
+                    Properties.password);
+            connect = true;
             return true;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            connect = false;
             return false;
         }
     }
@@ -60,6 +45,7 @@ public class SQLConnector {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
+            connect = false;
         }
     }
 
@@ -73,4 +59,16 @@ public class SQLConnector {
         }
 
     }
+
+    public boolean executeInsert(String insert) {
+        try {
+            stmt = con.createStatement();
+            stmt.execute(insert);
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
 }
