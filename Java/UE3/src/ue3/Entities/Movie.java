@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ue3;
+package ue3.Entities;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import ue3.util.DBConnection;
 
 /**
  *
@@ -14,20 +17,17 @@ import java.sql.SQLException;
  */
 public class Movie {
 
-    private int movieID;
+    private int id;
     private String title;
     private int year;
     private char type;
 
-    public Movie() {
+    public int getId() {
+        return id;
     }
 
-    public int getMovieID() {
-        return movieID;
-    }
-
-    public void setMovieID(int movieID) {
-        this.movieID = movieID;
+    private void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -55,7 +55,7 @@ public class Movie {
     }
 
     public boolean importSQL(int movieID) {
-
+        /*
         if (Properties.sqlc.connect()) {
             ResultSet rs = Properties.sqlc.executeQuery("SELECT * FROM Movie WHERE MovieID = " + movieID);
             try {
@@ -78,33 +78,41 @@ public class Movie {
         } else {
             return false;
         }
-
+         */
+        return false;
     }
 
+    /**
+     * Diese Methode fügt das aktuelle Movie-Objekt in SQL(Tablle Movie) ein.
+     */
     public void insert() {
-        if (Properties.sqlc.connect()) {
+
+        try {
+            Connection conn = DBConnection.getConnection();
+            Statement stmt = conn.createStatement();
             String insert = "INSERT INTO Movie VALUES (";
             insert += "M_MovieID.nextval, ";
             insert += "'" + this.getTitle() + "', ";
             insert += this.getYear() + ", ";
             insert += "'" + this.getType() + "'";
             insert += ")";
-            if (Properties.sqlc.executeInsert(insert)) {
-                ResultSet rs = Properties.sqlc.executeQuery("SELECT M_MovieID.currval FROM DUAL");
-                try {
-                    if (rs.next()) {
-                        this.setMovieID(rs.getInt(1));
-                    }
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
+            stmt.execute(insert);
+            ResultSet rs = stmt.executeQuery("SELECT M_MovieID.currval FROM DUAL");
+            if (rs.next()) {
+                this.setId(rs.getInt(1));
             }
-            Properties.sqlc.disconnect();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
+
     }
 
+    /**
+     * Diese Methode gibt den Wert des Movie Objekts als String zurück.
+     *
+     * @return String Wert
+     */
     @Override
-    // Kinofilm: Star Wars (1977)
     public String toString() {
         return "Kinofilm: " + this.getTitle() + " (" + this.getYear() + ")";
     }
