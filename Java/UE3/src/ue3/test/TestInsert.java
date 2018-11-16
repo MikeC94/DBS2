@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ue3.test;
 
 import java.sql.SQLException;
@@ -14,15 +9,26 @@ import ue3.Entities.Person;
 import ue3.util.DBConnection;
 
 /**
+ * Übrung 3 - Iteration 3b
  *
- * @author Mike
+ * @author A-Team
  */
-public class Test {
+public class TestInsert {
 
-    /*
+    /**
+     * Main-Methode
+     *
+     * @param args
+     * @throws SQLException
+     */
     public static void main(String[] args) throws SQLException {
         testInsert();
     }
+
+    /**
+     * Testmethode aus Iteration 3b
+     *
+     * @throws SQLException
      */
     public static void testInsert() throws SQLException {
         boolean ok = false;

@@ -4,6 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Diese Klasse stellt eine Verbindung zum Oracle SQL Server her
+ *
+ * @author Mike
+ */
 public class DBConnection {
 
     private static Connection conn = null;
@@ -17,6 +22,11 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Diese Methode git das Verbindungsobjekt zurück.
+     *
+     * @return Verbindungsobjekt
+     */
     public static Connection getConnection() {
         return conn;
     }

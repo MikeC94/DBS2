@@ -1,5 +1,30 @@
+-- Übung 3 Iteration 1
+
+-- Löschen
+--################################################################################
+-- Sequencen löschen
+DROP SEQUENCE G_GenreID; 
+DROP SEQUENCE M_MovieID; 
+DROP SEQUENCE P_PersonID; 
+DROP SEQUENCE MC_MovCharID; 
+
+-- Daten löschen
+DELETE FROM MovieGenre;
+DELETE FROM MovieCharacter;
+DELETE FROM Person;
+DELETE FROM Genre;
+DELETE FROM Movie;
+
+-- Tabellen löschen
+DROP TABLE MovieGenre;
+DROP TABLE MovieCharacter;
+DROP TABLE Person;
+DROP TABLE Genre;
+DROP TABLE Movie;
+
 -- Tabellen erstellen
 --################################################################################
+
 -- Tabelle Genre erstellen
 CREATE TABLE Genre (
     GenreID INT,
@@ -18,7 +43,6 @@ CREATE TABLE Movie (
     CONSTRAINT pk_M_MovieID PRIMARY KEY(MovieID)
 );
 CREATE SEQUENCE M_MovieID;
-
 
 -- Tabelle MovieGenre erstellen 
 CREATE TABLE MovieGenre (
@@ -55,6 +79,7 @@ CREATE SEQUENCE MC_MovCharID;
 
 -- Tabellen befüllen
 --################################################################################
+
 -- Tabelle Movie befüllen
 INSERT INTO Movie VALUES(M_MovieID.nextval, 'Star Wars - Eine neue Hoffnung', 1977, 'C');
 INSERT INTO Movie VALUES(M_MovieID.nextval, 'Forrest Gump', 1994, 'C');

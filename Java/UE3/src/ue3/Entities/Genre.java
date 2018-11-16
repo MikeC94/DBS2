@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ue3.Entities;
 
 import java.sql.Connection;
@@ -12,38 +7,55 @@ import java.sql.Statement;
 import ue3.util.DBConnection;
 
 /**
+ * Diese Klasse stellt ein Genre da
  *
- * @author Mike
+ * @author A-Team
  */
 public class Genre {
-    
+
     private int id;
     private String genre;
-    
-    public Genre() {
-    }
-    
+
+    /**
+     * Diese Methode gibt die ID zurück
+     *
+     * @return ID
+     */
     public int getId() {
         return id;
     }
-    
-    private void setId(int id) {
+
+    /**
+     * Diese Methode setzte die ID
+     *
+     * @param id ID
+     */
+    public void setId(int id) {
         this.id = id;
     }
-    
+
+    /**
+     * Diese Methode gibt den Namen des Gerne zurück
+     *
+     * @return Name
+     */
     public String getGenre() {
         return genre;
     }
-    
+
+    /**
+     * Diese Methode setzt den Namen des Gernre
+     *
+     * @param genre Name
+     */
     public void setGenre(String genre) {
         this.genre = genre;
     }
-    
+
     /**
      * Diese Methode fügt das aktuelle Genre-Objekt in SQL(Tablle Movie) ein.
      */
     public void insert() {
-        
         try {
             Connection conn = DBConnection.getConnection();
             Statement stmt = conn.createStatement();
@@ -59,7 +71,40 @@ public class Genre {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
+    }
+
+    /**
+     * Diese Methode aktualisiert das aktuelle Genre-Objekt in SQL.
+     */
+    public void update() {
+        try {
+            Connection conn = DBConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            String update = "UPADATE Genre SET Genre = ";
+            update += "'" + this.getGenre() + "'";
+            update += "WHERE GenreID = " + this.getId();
+            stmt.execute(update);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    /**
+     * Diese Methode löscht das aktuelle Genre-Objekt und seine Referenzen in
+     * SQL.
+     */
+    public void delete() {
+        try {
+            Connection conn = DBConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            String delete;
+            delete = "DELETE FROM MovieGenre WHERE GenreID = " + this.getId();
+            stmt.execute(delete);
+            delete = "DELETE FROM Genre WHERE GenreID = " + this.getId();
+            stmt.execute(delete);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     /**
@@ -71,5 +116,5 @@ public class Genre {
     public String toString() {
         return this.getGenre();
     }
-    
+
 }

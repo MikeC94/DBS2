@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ue3.Entities;
 
 import java.sql.Connection;
@@ -12,8 +7,9 @@ import java.sql.Statement;
 import ue3.util.DBConnection;
 
 /**
+ * Diese Klasse stellt eine Person da
  *
- * @author Mike
+ * @author A-Teams
  */
 public class Person {
 
@@ -21,29 +17,56 @@ public class Person {
     private String name;
     private char sex;
 
-    public Person() {
-    }
-
+    /**
+     * Diese Methode gibt die Id zurück.
+     *
+     * @return Id
+     */
     public int getId() {
         return id;
     }
 
-    private void setId(int id) {
+    /**
+     * Diese Methode setzt die Id.
+     *
+     * @param id Id
+     */
+    public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Diese Mehtode gibt den Namen zurück.
+     *
+     * @return Name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Diese Methode setzt den Namen.
+     *
+     * @param name Namen
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Diese Methode gibt das Geschlecht zurück. 'M' oder 'F'
+     *
+     * @return Geschlecht
+     */
     public char getSex() {
         return sex;
     }
 
+    /**
+     * Diese Methode setzt das Geschlecht. 'M' oder 'F'
+     *
+     * @param sex Geschlecht
+     */
     public void setSex(char sex) {
         this.sex = sex;
     }
@@ -65,6 +88,37 @@ public class Person {
             if (rs.next()) {
                 this.setId(rs.getInt(1));
             }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    /**
+     * Diese Methode aktualisiert das aktuelle Objekt in SQL.
+     */
+    public void update() {
+        try {
+            Connection conn = DBConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            String update = "UPDATE Person SET ";
+            update += "Name = '" + this.getName() + "', ";
+            update += "Sex = '" + this.getSex() + "'";
+            update += " WHERE PersonID = " + this.getId();
+            stmt.execute(update);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    /**
+     * Diese Methode löscht das aktuelle Person Objekt in SQL.
+     */
+    public void delete() {
+        try {
+            Connection conn = DBConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            String delete = "DELETE FROM Person WHERE PersonID = " + this.getId();
+            stmt.execute(delete);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
